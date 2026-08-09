@@ -24,7 +24,7 @@ window.CONFIG = {
   TELEGRAM_KANAL: "https://t.me/Kasb_Navoiy",
   INSTAGRAM:      "https://instagram.com/kasb_navoiy",
   TELEFON_RAQAM:  "+998 94 758 12 27",
-  SAYT_MANZILI:   "https://kurs.kasbnavoiy.uz",   // [ ] haqiqiy domen
+  SAYT_MANZILI:   "https://kasb-shahriyor-shomamatov.vercel.app",   // [ ] haqiqiy domen
 
   /* ── 7 ta modul ─────────────────────────────────────────── */
   MODULLAR: [
