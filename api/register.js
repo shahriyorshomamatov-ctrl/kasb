@@ -34,6 +34,7 @@ export default async function handler(req, res) {
 
   const BOT_TOKEN = process.env.BOT_TOKEN;
   const CHAT_ID = process.env.CHAT_ID;
+  const SHEETS_URL = process.env.SHEETS_URL; // ixtiyoriy — bo'lmasa jadvalga yozilmaydi
   if (!BOT_TOKEN || !CHAT_ID) {
     console.error('BOT_TOKEN yoki CHAT_ID sozlanmagan');
     return res.status(500).json({ ok: false, xato: 'Server sozlanmagan' });
@@ -80,7 +81,8 @@ export default async function handler(req, res) {
     `<b>Vaqt:</b> ${esc(vaqt)}` +
     (manba ? `\n<b>Manba:</b> ${esc(manba)}` : '');
 
-  try {
+  // ── 1. Telegramga xabar ──
+  async function telegramgaYuborish() {
     const tg = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -91,16 +93,43 @@ export default async function handler(req, res) {
         disable_web_page_preview: true,
       }),
     });
-
     const javob = await tg.json();
-    if (!javob.ok) {
-      console.error('Telegram xatosi:', javob.description);
-      return res.status(502).json({ ok: false, xato: 'Xabar yuborilmadi' });
-    }
-
-    return res.status(200).json({ ok: true });
-  } catch (e) {
-    console.error('Yuborishda xato:', e);
-    return res.status(502).json({ ok: false, xato: 'Tarmoq xatosi' });
+    if (!javob.ok) throw new Error('Telegram: ' + javob.description);
+    return true;
   }
+
+  // ── 2. Google Sheets'ga qator ──
+  // SHEETS_URL sozlanmagan bo'lsa — bu qadam o'tkazib yuboriladi, sayt baribir ishlaydi.
+  async function sheetgaYozish() {
+    const r = await fetch(SHEETS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ vaqt, ism, telefon: toliq, chiroyli, manba }),
+    });
+    if (!r.ok) throw new Error('Sheets HTTP ' + r.status);
+    return true;
+  }
+
+  const natijalar = await Promise.allSettled([
+    telegramgaYuborish(),
+    SHEETS_URL ? sheetgaYozish() : Promise.resolve(null),
+  ]);
+
+  const [tgNatija, sheetNatija] = natijalar;
+
+  if (sheetNatija.status === 'rejected') {
+    // Jadvalga yozilmasa ham arizani yo'qotmaymiz — logga yozib, davom etamiz.
+    console.error('Google Sheets xatosi:', sheetNatija.reason?.message);
+  }
+
+  if (tgNatija.status === 'rejected') {
+    console.error('Yuborishda xato:', tgNatija.reason?.message);
+    // Telegram ishlamadi, lekin jadvalga tushgan bo'lsa — ariza saqlangan.
+    if (sheetNatija.status === 'fulfilled' && sheetNatija.value) {
+      return res.status(200).json({ ok: true });
+    }
+    return res.status(502).json({ ok: false, xato: 'Xabar yuborilmadi' });
+  }
+
+  return res.status(200).json({ ok: true });
 }
