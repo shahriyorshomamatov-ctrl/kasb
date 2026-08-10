@@ -104,7 +104,15 @@ export default async function handler(req, res) {
     const r = await fetch(SHEETS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Apps Script uchun eng ishonchlisi
-      body: JSON.stringify({ vaqt, ism, telefon: toliq, chiroyli, manba }),
+      // Boshidagi apostrof — Google Sheets uchun "bu matn, formula emas" belgisi.
+      // Usiz "+998 90..." formula deb o'qilib, katakda #ERROR! chiqadi.
+      body: JSON.stringify({
+        vaqt,
+        ism,
+        telefon: toliq,
+        chiroyli: "'" + chiroyli,
+        manba,
+      }),
       redirect: 'follow',
     });
 

@@ -37,16 +37,25 @@ function doPost(e) {
       varaq.setColumnWidth(2, 180);
       varaq.setColumnWidth(3, 150);
       varaq.setColumnWidth(4, 200);
+      // Telefon ustuni doim matn bo'lsin — "+998..." formula deb o'qilmasin
+      varaq.getRange('C2:C').setNumberFormat('@');
     }
 
     var d = JSON.parse(e.postData.contents);
+    var raqam = d.chiroyli || d.telefon || '';
 
+    // Telefonni bo'sh qoldirib qator qo'shamiz.
+    // Sababi: "+998..." to'g'ridan-to'g'ri yozilsa, Sheets uni formula deb
+    // o'ylaydi va #ERROR! chiqaradi. Shuning uchun keyin matn sifatida qo'yamiz.
     varaq.appendRow([
       d.vaqt || new Date(),
       d.ism || '',
-      d.chiroyli || d.telefon || '',
+      '',
       d.manba || ''
     ]);
+
+    var qator = varaq.getLastRow();
+    varaq.getRange(qator, 3).setNumberFormat('@').setValue(raqam);
 
     return javob({ ok: true });
   } catch (xato) {
