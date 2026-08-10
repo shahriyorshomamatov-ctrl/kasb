@@ -52,6 +52,10 @@ window.CONFIG = {
     ["Shaxsiy brend", "7 kun ichida o'z profilingizni butunlay o'zgartirasiz."]
   ],
 
+  /* Rasmni almashtirgach shu raqamni bittaga oshiring — shunda
+     brauzer eski rasmni keshdan olmaydi. */
+  RASM_VERSIYA: "2",
+
   /* ── Ustozlar ───────────────────────────────────────────────
      rasm — dumaloq avatar (/images/ustozlar/)
      fon  — kartaning orqa fonidagi sahna surati (/images/fon/)   */
