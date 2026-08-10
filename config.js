@@ -7,18 +7,18 @@
 
 window.CONFIG = {
   /* ── Kurs haqida ────────────────────────────────────────── */
-  BOSHLANISH:  "1-sentabr",              // [ ] guruh qachon boshlanadi
+  BOSHLANISH:  "17-avgust",
   DAVOMIYLIK:  "3 oy",                   // 2 oy nazariy + 1 oy amaliy
   FORMAT:      "Oflayn · Navoiy",
   MANZIL:      "Navoiy shahri",          // [ ] aniq manzil
-  DARS_JADVALI: "Haftasiga 3 kun",       // [ ] qaysi kunlar, soat nechada
-  JOYLAR_SONI: "20",                     // [ ] guruhda nechta joy
+  DARS_JADVALI: "Haftasiga 3 kun",
+  JOYLAR_SONI: "50",
 
   /* ── Narx ───────────────────────────────────────────────── */
   NARX_ESKI:   "400$",                   // chizilgan holda ko'rinadi
   NARX:        "300$",
   NARX_IZOH:   "Guruh to'lgach qabul yopiladi",
-  TOLOV:       "To'liq yoki bo'lib to'lash mumkin",  // [ ] o'zingizga moslang
+  TOLOV:       "",                       // bo'sh qoldirilsa — saytda ko'rinmaydi
 
   /* ── Aloqa ──────────────────────────────────────────────── */
   TELEGRAM_KANAL: "https://t.me/Kasb_Navoiy",
@@ -53,13 +53,14 @@ window.CONFIG = {
   ],
 
   /* ── Ustozlar ───────────────────────────────────────────────
-     Rasmlarni /images/ustozlar/ papkasiga tashlang, keyin
-     RASM-TAYYORLASH.command ni bosing.                          */
+     rasm — dumaloq avatar (/images/ustozlar/)
+     fon  — kartaning orqa fonidagi sahna surati (/images/fon/)   */
   USTOZLAR: [
     {
       ism:    "Shahriyor Shomamatov",
       unvon:  "SMM va shaxsiy brend · Navoiy",
       rasm:   "images/ustozlar/shahriyor.jpg",
+      fon:    "images/fon/shahriyor.jpg",
       natija: [
         "119 ming obunachi — taksist_artist loyihasi",
         "To'xtasin Odilov: 2 oyda 100+ o'quvchi",
@@ -70,6 +71,7 @@ window.CONFIG = {
       ism:    "Mamadaminov Amiriddin",
       unvon:  "Mobilograf · ustoz · Navoiy",
       rasm:   "images/ustozlar/amiriddin.jpg",
+      fon:    "images/fon/amiriddin.jpg",
       natija: [
         "Sohada 5 yillik yo'l — noldan boshlagan",
         "2023-yildan buyon o'z kursini o'qitadi",
@@ -100,7 +102,7 @@ window.CONFIG = {
     ["To'lovni bo'lib to'lasa bo'ladimi?",
      "Ha, bo'lib to'lash mumkin. Shartlarni qo'ng'iroq paytida kelishamiz."],
     ["Kursdan keyin ish topa olamanmi?",
-     "Kurs oxirida portfolio va real loyiha tajribasi bo'ladi. Eng kuchli 6 nafar o'quvchi Medion Marketing jamoasiga taklif qilinadi."],
+     "Kurs oxirida portfolio va real loyiha tajribasi bo'ladi. Eng kuchli 6 nafar o'quvchi Kasb Navoiy jamoasiga taklif qilinadi."],
     ["Sertifikat berasizmi?",
      "Ha. Yakunda imtihon bo'ladi va sertifikat beriladi."]
   ]

@@ -10,7 +10,7 @@
 <meta name="description" content="Kursga ro'yxatdan o'tdingiz. Tez orada siz bilan bog'lanamiz.">
 
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Medion Marketing">
+<meta property="og:site_name" content="Kasb Navoiy">
 <meta property="og:locale" content="uz_UZ">
 <meta property="og:title" content="Arizangiz qabul qilindi">
 <meta property="og:description" content="Mobilografiya va SMM kursiga ro'yxatdan o'tdingiz.">
@@ -137,7 +137,7 @@ tailwind.config = {
   </div>
 
   <div class="mt-12 text-center text-[13px] text-dim">
-    <div class="font-semibold text-muted">Medion Marketing · Navoiy</div>
+    <div class="font-semibold text-muted">Kasb Navoiy</div>
     <a id="f-tel" href="#" class="inline-block mt-2 hover:text-gold transition-colors" data-cfg="TELEFON_RAQAM"></a>
   </div>
 
@@ -151,6 +151,7 @@ tailwind.config = {
   document.querySelectorAll('[data-cfg]').forEach(function (el) {
     var v = C[el.getAttribute('data-cfg')];
     if (v) el.textContent = v;
+    else el.classList.add('hidden');   // qiymat bo'sh bo'lsa — butunlay yashiramiz
   });
   document.getElementById('btn-tg').href = C.TELEGRAM_KANAL;
   document.getElementById('btn-ig').href = C.INSTAGRAM;

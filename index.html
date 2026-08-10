@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0B0C10">
 
-<title>Mobilografiya va SMM kursi — Navoiy · Medion Marketing</title>
+<title>Mobilografiya va SMM kursi — Kasb Navoiy</title>
 <meta name="description" content="3 oyda telefoningiz bilan pul topadigan kasbni o'rganing. Real mijozlar, portfolio va birinchi daromad. Navoiyda oflayn.">
 
 <!-- DIQQAT: domen o'zgarsa, quyidagi 2 ta to'liq havolani ham yangilang. -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Medion Marketing">
+<meta property="og:site_name" content="Kasb Navoiy">
 <meta property="og:locale" content="uz_UZ">
 <meta property="og:url" content="https://kasb-shahriyor-shomamatov.vercel.app/">
-<meta property="og:title" content="Mobilografiya va SMM kursi — Navoiy">
+<meta property="og:title" content="Mobilografiya va SMM kursi — Kasb Navoiy">
 <meta property="og:description" content="3 oy. Real mijozlar, portfolio va birinchi daromad. Bu kurs sizni tomoshabin emas, mutaxassis qiladi.">
 <meta property="og:image" content="https://kasb-shahriyor-shomamatov.vercel.app/images/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -77,7 +77,7 @@ tailwind.config = {
       <div>
         <div class="inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1.5">
           <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
-          <span class="text-[11px] font-semibold tracking-[0.14em] text-muted uppercase">Medion Marketing · Navoiy</span>
+          <span class="text-[11px] font-semibold tracking-[0.14em] text-muted uppercase">Kasb Navoiy</span>
         </div>
 
         <h1 class="mt-6 text-[34px] leading-[1.08] sm:text-5xl lg:text-[54px] font-extrabold">
@@ -387,7 +387,7 @@ tailwind.config = {
 <section class="bg-bg2 border-y border-line/60">
   <div class="max-w-4xl mx-auto px-5 py-14 md:py-20">
     <h2 class="reveal text-3xl sm:text-4xl font-extrabold text-center leading-tight">
-      <span class="text-gold">6 nafar o'quvchi</span> Medion Marketing jamoasiga taklif qilinadi
+      <span class="text-gold">6 nafar o'quvchi</span> Kasb Navoiy jamoasiga taklif qilinadi
     </h2>
     <p class="reveal mt-4 text-center text-[15px] text-muted max-w-2xl mx-auto leading-relaxed">
       Bizning maqsadimiz faqat dars o'tish emas. Eng kuchli o'quvchilarni o'z jamoamizga
@@ -418,7 +418,7 @@ tailwind.config = {
 <section class="glow relative overflow-hidden">
   <div class="relative z-10 max-w-6xl mx-auto px-5 py-14 md:py-20">
     <h2 class="reveal text-3xl sm:text-4xl font-extrabold text-center leading-tight">
-      Sizga <span class="text-gold">amaliyotchilar</span> o'rgatadi
+      Sizga <span class="text-gold">mutaxassislar</span> o'rgatadi
     </h2>
     <p class="reveal mt-3 text-center text-muted text-[15px]">Har biri o'z natijasini raqamda ko'rsata oladi.</p>
 
@@ -512,7 +512,7 @@ tailwind.config = {
 <footer class="border-t border-line/60">
   <div class="max-w-6xl mx-auto px-5 py-10 flex flex-col sm:flex-row items-center justify-between gap-5">
     <div class="text-center sm:text-left">
-      <div class="font-bold">Medion Marketing</div>
+      <div class="font-bold">Kasb Navoiy</div>
       <div class="text-[13px] text-dim mt-0.5">Navoiy</div>
     </div>
     <div class="flex items-center gap-2.5">
@@ -550,6 +550,7 @@ tailwind.config = {
   document.querySelectorAll('[data-cfg]').forEach(function (el) {
     var v = C[el.getAttribute('data-cfg')];
     if (v) el.textContent = v;
+    else el.classList.add('hidden');   // qiymat bo'sh bo'lsa — butunlay yashiramiz
   });
   document.getElementById('f-tg').href  = C.TELEGRAM_KANAL;
   document.getElementById('f-ig').href  = C.INSTAGRAM;
@@ -594,8 +595,19 @@ tailwind.config = {
   if (C.USTOZLAR.length === 2) uBox.classList.add('max-w-3xl');
 
   uBox.innerHTML = C.USTOZLAR.map(function (s) {
+    /* Sahna surati — kartaning orqa fonida, juda xira.
+       Ustidan qorayuvchi qatlam tushadi, shuning uchun matn o'qilaveradi. */
+    var fon = s.fon
+      ? '<div class="absolute inset-0 bg-cover opacity-[0.30]" ' +
+             'style="background-image:url(' + s.fon + ');background-position:center 18%"></div>' +
+        '<div class="absolute inset-0" ' +
+             'style="background:linear-gradient(180deg,rgba(11,12,16,.35) 0%,rgba(21,23,29,.80) 42%,rgba(21,23,29,.97) 68%,#15171D 100%)"></div>'
+      : '';
+
     return '' +
-    '<div class="reveal rounded-2xl border border-line bg-card p-6 text-center">' +
+    '<div class="reveal relative overflow-hidden rounded-2xl border border-line bg-card p-6 text-center">' +
+      fon +
+      '<div class="relative">' +
       '<div class="mx-auto w-24 h-24 rounded-full p-[2px] bg-gold">' +
         '<div class="relative w-full h-full rounded-full bg-bg2 overflow-hidden">' +
           '<span class="absolute inset-0 grid place-items-center text-2xl font-extrabold text-gold">' +
@@ -612,6 +624,7 @@ tailwind.config = {
             '<span>' + n + '</span></li>';
         }).join('') +
       '</ul>' +
+      '</div>' +
     '</div>';
   }).join('');
 
