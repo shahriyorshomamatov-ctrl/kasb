@@ -103,10 +103,21 @@ export default async function handler(req, res) {
   async function sheetgaYozish() {
     const r = await fetch(SHEETS_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Apps Script uchun eng ishonchlisi
       body: JSON.stringify({ vaqt, ism, telefon: toliq, chiroyli, manba }),
+      redirect: 'follow',
     });
-    if (!r.ok) throw new Error('Sheets HTTP ' + r.status);
+
+    const matn = (await r.text().catch(() => '')).slice(0, 400);
+
+    if (!r.ok) {
+      throw new Error(
+        `Sheets HTTP ${r.status} | oxirgi manzil: ${r.url} | javob: ${matn.replace(/\s+/g, ' ')}`
+      );
+    }
+    if (matn.indexOf('"ok":true') === -1) {
+      throw new Error(`Sheets kutilmagan javob: ${matn.replace(/\s+/g, ' ')}`);
+    }
     return true;
   }
 
